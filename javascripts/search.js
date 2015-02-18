@@ -76,7 +76,6 @@ $(function() {
   });
 
   $("aside :checkbox").on("change", function() {
-    toggleCategories();
     $("#search").submit();
   });
 });
