@@ -48,34 +48,17 @@ $(function() {
     return $items.filter("[data-id=" + idx + "]");
   }
 
-  function toggleCategories() {
-    $categories.each(function(i) {
-      var $e = $categories.eq(i),
-          checked = $e.is(":checked"),
-          category = $e.val();
-
-      catalog.filter(function(item) {
-        return item.category === category;
-      }).forEach(function(item) {
-        findItem(item.id).toggle(checked);
-      });
-    });
-  }
-
-  $("#search").on("submit", function(e) {
-    e.preventDefault();
-
-    var term = $(e.target).find("[type=search]").val().toLowerCase();
-
-    toggleCategories();
-    catalog.forEach(function(item) {
-      if (item.title.toLowerCase().indexOf(term) === -1) {
-        findItem(item.id).hide();
-      }
-    });
-  });
-
   $("aside :checkbox").on("change", function() {
-    $("#search").submit();
+    var $checkbox = $(this),
+        checked = $checkbox.is(":checked"),
+        category = $checkbox.val(),
+        category_items;
+
+    category_items = catalog.filter(function(item) {
+      return item.category === category;
+    });
+    category_items.forEach(function(item) {
+      findItem(item.id).toggle(checked);
+    });
   });
 });
